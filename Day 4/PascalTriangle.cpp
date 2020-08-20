@@ -43,16 +43,35 @@ vector<vector<int>> generate(int n) {
 }
 
 void solve(){
-	ll n;
+	ll n ,  , k;
 	cin >> n;
-	vector<vector<int> > vv;
-	vv =  generate(n);
-	for(int i = 0 ; i < n ; i++){
-		for(int j = 0 ; j < vv[i].size() ; j++){
-			cout << vv[i][j] << " ";
-		}
-		cout << "\n";
-	}
+    int hsh[1001] = {0};
+	int mat1[n][n] , mat2[n][n];
+    for(int i = 0 ; i < n ; i++){
+        for(int j = 0 ; j < n ; j++){
+            cin >> mat1[i][j];
+        }
+    }
+    for(int i = 0 ; i < n ; i++){
+        for(int j = 0 ; j < n ; j++){
+            cin >> x;
+            hsh[x]++
+            mat2[i][j] = x;
+
+        }
+    }
+    cin >> k;
+    int anscnt = 0;
+    for(int i = 0 ; i < n ; i++){
+        for(int j = 0 ; j < n ; j++){
+            int t = k - mat1[i][j] ; 
+            if(hsh[t] > 0){
+                hsh[t]--;
+                anscnt++;
+            }
+        }
+    }
+    cout << anscnt << "\n";
 }
  
 int main(int argc, char const *argv[]){
