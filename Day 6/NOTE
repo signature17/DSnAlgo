@@ -1,0 +1,7 @@
+We have given a large number now we can easily find out the factorial of this large number using boost multiprevision Library.
+Boost library has included a new multiprecision library in the current 1.53.0 release for C++ programmers who need more precision than 64 bits.
+
+#include <boost/multiprecision/cpp_int.hpp> 
+using boost::multiprecision::cpp_int; 
+
+inspite of using int you can use cpp_int and get the desired result.
