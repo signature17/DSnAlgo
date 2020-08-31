@@ -1,4 +1,5 @@
 // Do not practice until you get it right, but keep practicing until you can’t get it wrong.
+// using a bit of variable in place of hashing reduced the appaoch to O(n).
 #include "bits/stdc++.h"
 using namespace std; 
 using ll = long long;
@@ -18,7 +19,7 @@ void solve(){
     for (int i = 0; i < n ; ++i ) { 
         int val = (s[i]-'a'); 
         if ((checker & (1 << val)) > 0){
-            cout << "No";
+            cout << s[i] << "\n";
             return;
         }
             
@@ -26,7 +27,7 @@ void solve(){
         
     } 
   
-    cout << "Yes\n";
+    cout << "-1\n";
 }
  
 int main(int argc, char const *argv[]){
