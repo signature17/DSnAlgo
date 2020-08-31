@@ -1,4 +1,5 @@
 // Do not practice until you get it right, but keep practicing until you can’t get it wrong.
+// check if y is subsequence of x
 #include "bits/stdc++.h"
 using namespace std; 
 using ll = long long;
@@ -32,7 +33,7 @@ int main(int argc, char const *argv[]){
     // take_input;
     fast;
     ll t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
         solve();
     }
