@@ -1,0 +1,17 @@
+How to identify
+
+1. there will be a subarray/related to subarray will be asked
+2. largest/maximum 
+3. Condition
+
+two types
+1. window size is know
+2. Window size is not know
+
+
+ Fixed - 
+ 1. Max/min sub array of size k
+ 2. Ist positive in every win size of k
+ 3. count occurences of anagrams
+ 4. max of all subarray of size k
+ 5. max of min for every win s
