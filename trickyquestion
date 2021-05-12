@@ -1,0 +1,98 @@
+// Design special stack with getmin in O(1) time time and O(1) space
+
+
+1. Using two stack (O(n) space : Pushing min element in s2 
+
+2.While pushing
+if x < mn : push 2*x-mn and put the provided x in mn
+Similarly while popping
+if s.top() < mn(indicates the flag): Restore the mn before popping: mn = 2* mn -s.top()
+
+class MinStack {
+public:
+    long mn;
+    stack<long>s;
+    void push(int x) {
+        if(s.empty()){
+            mn = x;
+            s.push(x);
+        }
+        else if(x < mn){
+            long temp = mn; 
+            mn = x;
+            long y = x;
+            y = 2*y - temp;
+            s.push(y);
+        }
+        else{
+            s.push(x);
+        }
+    }
+    
+    void pop() {
+        if(s.empty())return;
+        if(s.top() < mn){
+            // if stack top contains element smaller than mn, it means the stack top is acting as flag
+            mn = 2*mn - s.top();
+            s.pop();
+        }
+        else{
+            s.pop();
+        }
+    }
+    
+    int top() {
+        if(s.empty())return -1;
+        if(s.top() < mn){
+            return mn;
+        }
+        return s.top();
+    }
+    
+    int getMin() {
+        if(s.empty())return -1;
+        return mn;
+    }
+};
+ 
+This question can also be done by Linked List
+
+a. Make every new element the new head with updated min. 
+b. And put the previous element next to the new head.
+
+class MinStack {
+public:
+    struct Node{
+        int val;
+        int min;
+        Node* next;
+        
+        Node(int val, int min, Node*next = NULL){
+            this->val = val;
+            this->min = min;
+            this->next = next;
+        }
+    };
+    Node*head;
+    void push(int x) {
+        if(!head){
+            head = new Node(x, x);
+        }
+        else{
+            // put every new element in the front with updated min, make them head
+            head = new Node(x, min(x, head->min), head);
+        }
+    }
+    
+    void pop() {
+        head = head->next;
+    }
+    
+    int top() {
+        return head->val;        
+    }
+    
+    int getMin() {  
+        return head->min;
+    }
+};

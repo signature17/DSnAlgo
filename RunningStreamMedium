@@ -1,0 +1,61 @@
+Median of running stream
+
+1. O(n2)
+As soon as we encounter any element we will plae it at right place and insertion sort type of thing can be used which can take O(n). so for n element it would go up to n2.
+
+In this  approach we are traversing the previous element which is increasing the time we can make use of balance binary tree may be heap woould be useful
+
+We will taking two heap , first heap will be max heap and second will be min heap
+
+we should have have to make difference between the sizes of tree should be less than 1;
+
+
+class MedianFinder {
+public:
+    /** initialize your data structure here. */
+    
+    priority_queue<int> maxH; //for the first half of the elements
+    priority_queue<int,vector<int>,greater<int>> minH; //for the second half of the elements
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        //by default we consider the element on the left side i.e. maxH
+        if(maxH.empty() || maxH.top()>num){
+            maxH.push(num);
+        }
+        else{
+            minH.push(num);
+        }
+        //rebalance the heaps to have same size or difference of size is 1
+        rebalance();
+    }
+    
+    double findMedian() {
+        //if the number of elements that means we have even number of elements-> ([2,3], the median is (2 + 3) / 2 = 2.5)
+        if(maxH.size()==minH.size()){
+            return (maxH.top()+minH.top())/2.0;
+        }
+        //if left side has greater number of elements then middle is on the left side
+        if(maxH.size()>minH.size()){
+            return maxH.top();
+        }
+        //if right side has greater number of elements then middle is on the right side
+        else{
+            return minH.top();
+        }
+    }
+    void rebalance(){
+        //if right side is greater (minH) then put 1 element of right side to left side(maxH) 
+        if(maxH.size()+1<minH.size()){
+            maxH.push(minH.top());
+            minH.pop();
+        }
+        //if left side is greater (maxH) then put 1 element of left side to right side(minH)
+        else if(minH.size()+1<maxH.size()){
+            minH.push(maxH.top());
+            maxH.pop();
+        }
+    }
+};
