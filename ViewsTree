@@ -1,0 +1,54 @@
+Vertical order of binary tree
+
+
+root -> 0 , root-> left -1 root ->right -> +1
+datastructure map , set(to maintain the order at the same level)
+
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+	map<int, vector<int> > m;  // when iterate map, key is already the order of x-axis
+	queue<pair<int, TreeNode*> > q; // for level traversal
+	q.push(make_pair(0, root));  // root default x-axis is 0
+	while(!q.empty()) {
+		set<pair<int, int> > tmp;  // k: x-axis, v:val Already solved the case when the position is ths same
+		int len=q.size();
+		for(int i=0;i<len;++i) {
+			auto p=q.front();q.pop();
+			tmp.insert(make_pair(p.first, p.second->val));
+			if (p.second->left) q.push(make_pair(p.first-1, p.second->left));
+			if (p.second->right) q.push(make_pair(p.first+1, p.second->right));
+		}
+
+		for(auto p : tmp) m[p.first].push_back(p.second);
+	}
+
+	vector<vector<int> > res;
+	for(auto kv : m) res.push_back(kv.second);
+	return res;
+}
+
+recursive solution(dfs based)
+
+
+class Solution {
+public:
+    void dfs(TreeNode* root, int dist, int level, map<int, vector<pair<int, int>>> &m){
+        if(!root)return;
+        m[dist].push_back(make_pair(level, root->val));
+        dfs(root->left, dist-1, level+1, m);
+        dfs(root->right, dist+1, level+1, m);
+    }
+    
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        map<int, vector<pair<int, int>>> m;
+        vector<vector<int>> ans;
+        
+        dfs(root, 0, 0, m);
+        for(auto it:m){
+            sort(it.second.begin(), it.second.end());
+            vector<int> tmp;
+            for(auto i:it.second)tmp.push_back(i.second);
+            ans.push_back(tmp);
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,172 @@
+1. Rearrange Characters
+
+class Solution {
+public:
+    string reorganizeString(string s) {
+        map<char, int> mp;
+        for (char c : s) mp[c]++;
+        priority_queue<pair<int, char>> pq;
+        for (auto p : mp)
+            pq.push({p.second, p.first});
+
+        string res = "";
+        pair<int, char> top1, top2;
+        while(pq.size() > 1) {
+            top1 = pq.top(); pq.pop();
+            res += top1.second;
+            top2 = pq.top() ; pq.pop();
+            res += top2.second;
+            top1.first --; top2.first--;
+            mp[top1.second]--, mp[top2.second]--;
+            //cout << mp[top1.second] << " " << mp[top2.second] << endl;
+            if(mp[top1.second] > 0){
+                pq.push(top1);
+            }
+            if(mp[top2.second] > 0){
+                pq.push(top2);
+            }
+            //cout << res << endl;
+        }
+        if(!pq.empty()){
+            top1 =  pq.top();pq.pop();
+            if(mp[top1.second] > 1) return "";
+            res += top1.second;
+        }
+        return res;
+    }
+};
+
+2. Merge k Sorted Arrays 
+
+class Solution
+{
+    public:
+    //Function to merge k sorted arrays.
+    vector<int> mergeKArrays(vector<vector<int>> arr, int k)
+    {
+        int n = arr.size();
+        int m = arr[0].size();
+        priority_queue<int , vector<int> ,greater<int>> pq;
+        for(int i = 0 ; i < k ; i++){
+            for(int j = 0 ; j < k ; j++){
+                pq.push(arr[i][j]);
+            }
+        }
+        vector<int>res;
+        while(!pq.empty()){
+            res.push_back(pq.top());
+            pq.pop();
+        }
+        return res;
+    }
+};
+
+3. Minimum Cost of ropes
+
+#include "bits/stdc++.h"
+using namespace std;
+ 
+using ll = long long;
+ 
+const ll inf = 1e18;
+const int N = 2 * 1e5 + 10;
+
+ll res;
+//ll a[N];
+int t[101][101];
+ 
+void solve(){
+	ll n , x ,  ans = 0;
+	cin >> n ;
+	priority_queue <int, vector<int>, greater<int> > pq; 
+	for(int i = 0 ; i < n  ; i++){
+		cin >> x;
+		pq.push(x);
+	}
+	while(pq.size() > 1){
+		int x = pq.top();
+		pq.pop();
+		//cout << x << endl;
+		int y = pq.top();
+		//cout << x <<" " << y << "\n";
+		pq.pop();
+		int k = x + y;
+		ans += k;
+		pq.push(k);
+	}
+	cout << ans <<"\n";
+}
+ 
+int main(int argc, char const *argv[]){
+	ios_base::sync_with_stdio(0);cin.tie(NULL);cout.tie(NULL);
+    ll t = 1;
+    cin >> t;
+    while(t--){
+    	solve();
+    }
+}
+// GokuOp
+
+4. Kth largest element in a stream
+
+class Solution {
+  public:
+    vector<int> kthLargest(int k, int arr[], int n) {
+        vector<int> v;
+        priority_queue<int, vector<int>, greater<int>> pq;
+        for(int i=0;i<n;i++)
+        {
+            if(pq.size()==k)
+            {
+                v.push_back(pq.top());
+                if(pq.top()<arr[i])
+                {
+                    pq.pop();
+                    pq.push(arr[i]);
+                }
+            }
+            else
+            {
+                pq.push(arr[i]);
+                if(pq.size()!=k)
+                v.push_back(-1);
+            }
+        }
+        v.push_back(pq.top());
+        return v;
+    }
+};
+
+5. k closest number to origin
+
+class Solution {
+public:
+    int caldist(int x , int y){
+        int ans = (x)*(x) +(y)*(y);
+        return ans;
+    }
+    vector<vector<int>> kClosest(vector<vector<int>>& v, int K){
+        vector<vector<int>> ans;
+        priority_queue < pair<int , pair<int , int>>> pq;
+        for(int i = 0 ; i < v.size() ; i++){
+            int x = v[i][0];
+            int y = v[i][1];
+            int dis = caldist(x , y);
+            cout << dis << endl;
+            pq.push({dis , {x , y}});
+            if(pq.size() > K){
+                pq.pop();
+            }
+        }
+        pair<int , int> pp;
+        while(pq.size()){
+           pp = pq.top().second;
+           vector<int> v1;
+           v1.push_back(pp.first);
+           v1.push_back(pp.second);
+            ans.push_back(v1);
+            pq.pop();
+	    }
+        return ans;
+    }
+};
