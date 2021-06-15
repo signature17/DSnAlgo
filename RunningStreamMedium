@@ -7,7 +7,7 @@ In this  approach we are traversing the previous element which is increasing the
 
 We will taking two heap , first heap will be max heap and second will be min heap
 
-we should have have to make difference between the sizes of tree should be less than 1;
+we should have to make sure difference between the sizes of tree should be less than 1;
 
 
 class MedianFinder {
