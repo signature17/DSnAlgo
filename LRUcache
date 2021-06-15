@@ -1,3 +1,6 @@
+using list and map
+why list over vector -> once we know the position then insertion and deletion are really very quick compared to vector.
+
 class LRUCache {
 public:
     unordered_map<int, pair<list<int>::iterator, int>> ht;
